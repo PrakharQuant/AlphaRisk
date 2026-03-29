@@ -68,7 +68,7 @@ This has a striking interpretation: if an agent's current wealth $w < R(X)$, the
 ```
 
 ---
-
+![Rolling Foster-Hart Risk Index — BTC-USD](risk_plot.png)
 ## Quickstart
 
 ```bash
