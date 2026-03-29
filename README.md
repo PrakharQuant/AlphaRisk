@@ -28,27 +28,27 @@ The Sharpe ratio is mean-variance and implicitly assumes Gaussian returns. Real 
 
 ### Aumann-Serrano Index
 
-Introduced by Aumann & Serrano (2008), the AS index $\rho(X)$ of a gamble (return distribution) $X$ is defined as the unique solution to:
+Introduced by Aumann & Serrano (2008), the AS index ρ(X) of a gamble (return distribution) X is defined as the unique solution to:
 
-$$\mathbb{E}\left[e^{-\frac{X}{\rho}}\right] = 1$$
+$$\mathbb{E}\left[e^{-X/\rho}\right] = 1$$
 
-Equivalently, $\rho = 1/\alpha^*$ where $\alpha^*$ solves the moment-generating function equation $M_X(-\alpha^*) = 1$. This can be interpreted as: the riskiness equals the reciprocal of the **absolute risk-aversion coefficient** of the CARA agent who is exactly indifferent to taking the gamble.
+Equivalently, ρ = 1/α where α solves the MGF equation M_X(−α) = 1. This can be interpreted as: the riskiness equals the reciprocal of the **absolute risk-aversion coefficient** of the CARA agent who is exactly indifferent to taking the gamble.
 
 **Key properties:**
-- **Homogeneous of degree 1:** scaling a position by $\lambda$ scales its AS index by $\lambda$
-- **Duality with CARA utility:** $\rho(X)$ is the wealth level at which an agent with $u(w) = -e^{-w/\rho}$ is indifferent
+- **Homogeneous of degree 1:** scaling a position by λ scales its AS index by λ
+- **Duality with CARA utility:** ρ(X) is the wealth level at which an agent with u(w) = −e^(−w/ρ) is indifferent
 - **Lower is safer** — BTC will show a far higher AS index than SPY
 
 ### Foster-Hart Index
 
-Foster & Hart (2009, 2013) define the riskiness $R(X)$ as the minimum initial wealth $R$ such that **no-bankruptcy is achievable** under Kelly-optimal play. It solves:
+Foster & Hart (2009, 2013) define the riskiness R(X) as the minimum initial wealth R such that **no-bankruptcy is achievable** under Kelly-optimal play. It solves:
 
 $$\mathbb{E}\left[\log\left(1 + \frac{X}{R}\right)\right] = 0$$
 
 This has a striking interpretation: if an agent's current wealth $w < R(X)$, there **exists no betting strategy** that guarantees avoiding bankruptcy in the long run. If $w \geq R(X)$, a safe strategy exists.
 
 **Key properties:**
-- **Bankruptcy threshold:** investing $1 in an asset with FH index $R$ is safe only if total wealth $\geq R$
+- **Bankruptcy threshold:** investing $1 in an asset with FH index R is safe only if total wealth ≥ R
 - **Consistent with all risk-averse preferences:** any risk-averse expected utility maximiser will prefer a gamble with lower FH index
 - **Naturally handles left-tail events** (unlike Sharpe, which is symmetric)
 
