@@ -27,6 +27,7 @@ The Sharpe ratio is mean-variance and implicitly assumes Gaussian returns. Real 
 ## Theory
 
 ### Aumann-Serrano Index
+![Aumann-Serrano Risk Index](as-indice.png)
 
 Introduced by Aumann & Serrano (2008), the AS index ρ(X) of a gamble (return distribution) X is defined as the unique solution to:
 
@@ -39,7 +40,10 @@ Equivalently, ρ = 1/α where α solves the MGF equation M_X(−α) = 1. This ca
 - **Duality with CARA utility:** ρ(X) is the wealth level at which an agent with u(w) = −e^(−w/ρ) is indifferent
 - **Lower is safer** : BTC will show a far higher AS index than SPY
 
+
 ### Foster-Hart Index
+
+![Foster-Hart Risk Measure](fh-indice.png)
 
 Foster & Hart (2009, 2013) define the riskiness R(X) as the minimum initial wealth R such that **no-bankruptcy is achievable** under Kelly-optimal play. It solves:
 
