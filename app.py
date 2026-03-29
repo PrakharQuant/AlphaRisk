@@ -1,9 +1,10 @@
 import streamlit as st
 import yfinance as yf
 import numpy as np
+import pandas as pd  # <--- Added this missing import
 from scipy.optimize import brentq
 
-# --- CORE MATH LOGIC (Moved here to avoid import errors) ---
+# --- CORE MATH LOGIC ---
 
 def calculate_as_index(returns):
     """Calculates the Aumann-Serrano Risk Index."""
@@ -13,7 +14,8 @@ def calculate_as_index(returns):
     if mu <= 0: return np.inf
     
     def objective(alpha):
-        return np.mean(np.exp(-alpha * returns)) - 1
+        # We use a safety clip to prevent overflow in exp
+        return np.mean(np.exp(np.clip(-alpha * returns, -100, 100))) - 1
     
     try:
         alpha_star = brentq(objective, 1e-10, 100)
@@ -49,6 +51,8 @@ This tool calculates the **Aumann-Serrano** and **Foster-Hart** risk indices.
 Unlike the Sharpe Ratio, these measures account for 'fat-tail' risks and bankruptcy potential.
 """)
 
+# Sidebar inputs
+st.sidebar.header("Settings")
 ticker = st.sidebar.text_input("Enter Ticker (e.g., BTC-USD, TSLA, SPY)", "BTC-USD")
 days = st.sidebar.slider("Analysis Window (Days)", 30, 730, 365)
 
@@ -59,11 +63,15 @@ if st.button("Analyze Risk Profile"):
         if data.empty:
             st.error("No data found! Please check the ticker symbol.")
         else:
-            # Handle potential MultiIndex columns in newer yfinance versions
+            # Handle MultiIndex columns (common in newer yfinance)
             if isinstance(data.columns, pd.MultiIndex):
-                prices = data['Adj Close'][ticker]
+                # Check if 'Adj Close' exists as a level
+                if 'Adj Close' in data.columns.levels[0]:
+                    prices = data['Adj Close'][ticker]
+                else:
+                    prices = data['Close'][ticker]
             else:
-                prices = data['Adj Close']
+                prices = data['Adj Close'] if 'Adj Close' in data.columns else data['Close']
                 
             returns = prices.pct_change().dropna().values
             
@@ -76,11 +84,11 @@ if st.button("Analyze Risk Profile"):
             c1.metric("Aumann-Serrano Index", f"{as_val:.4f}")
             c2.metric("Foster-Hart (Min Wealth)", f"${fh_val:,.2f}")
             
-            st.subheader("Price History")
+            st.subheader(f"Price History: {ticker}")
             st.line_chart(prices)
             
             st.info(f"""
             **What does this mean?**
-            * **AS Index:** Measures the 'intrinsic riskiness'. Lower is safer.
-            * **FH Index:** You should have at least **${fh_val:,.2f}** in total wealth for every $1 invested in {ticker} to avoid the mathematical certainty of eventual ruin.
+            * **AS Index:** Measures 'intrinsic riskiness'. Lower values are safer.
+            * **FH Index:** Suggests you should have at least **${fh_val:,.2f}** in total wealth for every $1 invested in {ticker} to avoid the mathematical certainty of eventual ruin.
             """)
