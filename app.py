@@ -1,3 +1,11 @@
+import sys
+import os
+sys.path.append(os.path.dirname(__file__))
+
+import streamlit as st
+import yfinance as yf
+# ... rest of your imports
+
 import streamlit as st
 import yfinance as yf
 import numpy as np
