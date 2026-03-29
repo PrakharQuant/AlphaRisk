@@ -46,8 +46,21 @@ if st.button("Analyze Risk Profile"):
             c1.metric("Aumann-Serrano Index", f"{as_val:.4f}")
             c2.metric("Foster-Hart (Min Wealth)", f"${fh_val:,.2f}")
             
+            import matplotlib.pyplot as plt
+
             st.subheader(f"Price History: {ticker}")
             st.line_chart(prices)
+
+            st.subheader(f"Rolling 30-Day Foster-Hart Index: {ticker}")
+            rolling_fh = pd.Series(returns).rolling(window=30).apply(calculate_fh_index)
+            fig, ax = plt.subplots(figsize=(10, 4))
+            ax.plot(rolling_fh.values, color='crimson', linewidth=1.5, label='FH Index (30d rolling)')
+            ax.set_ylabel("Min. Safe Wealth per $1 invested")
+            ax.set_title(f"Riskiness Over Time — {ticker}")
+            ax.grid(True, alpha=0.3)
+            ax.legend()
+            st.pyplot(fig)
+            plt.close(fig)  # prevents memory leak across Streamlit reruns
             
             st.info(f"""
             **What does this mean?**
