@@ -12,7 +12,7 @@ This tool calculates the **Aumann-Serrano** and **Foster-Hart** risk indices.
 Unlike the Sharpe Ratio, these measures account for fat-tail risks and bankruptcy potential.
 """)
 
-tab1, tab2 = st.tabs(["📈 Market Data", "🎲 Gamble Simulator"])
+tab1, tab2 = st.tabs(["Market Data", "Gamble Simulator"])
 
 # --- TAB 1: existing code ---
 with tab1:
