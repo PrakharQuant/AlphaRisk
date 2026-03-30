@@ -165,3 +165,10 @@ with tab2:
         based on the AS index, and requires **{"modest" if fh_val < 500 else "substantial" if fh_val < 5000 else "very large"}**
         capital to undertake safely according to Foster-Hart.
         """)
+        tab1, tab2 = st.tabs(["📈 Market Data", "🎲 Gamble Simulator"])
+
+with tab1:
+    st.write("Tab 1 works")
+
+with tab2:
+    st.write("Tab 2 works")
