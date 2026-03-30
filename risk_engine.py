@@ -10,6 +10,7 @@ def calculate_as_index(returns):
 
     def objective(alpha):
         return np.mean(np.exp(np.clip(-alpha * returns, -100, 100))) - 1
+
     try:
         return 1 / brentq(objective, 1e-10, 100)
     except (ValueError, RuntimeError):
@@ -26,6 +27,7 @@ def calculate_fh_index(returns):
 
     def objective(R):
         return np.mean(np.log(1 + returns / R))
+
     try:
         return brentq(objective, max_loss + 1e-8, max_loss * 100_000)
     except (ValueError, RuntimeError):
